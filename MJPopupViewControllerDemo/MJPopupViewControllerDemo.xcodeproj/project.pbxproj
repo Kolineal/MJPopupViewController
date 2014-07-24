@@ -23,6 +23,7 @@
 		7A469E21159793BE00BA5F2E /* MJSecondDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A469E1F159793BE00BA5F2E /* MJSecondDetailViewController.m */; };
 		7A469E22159793BE00BA5F2E /* MJSecondDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A469E20159793BE00BA5F2E /* MJSecondDetailViewController.xib */; };
 		7ACBD91A16BC60C4005F5EAB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ACBD91916BC60C4005F5EAB /* Default-568h@2x.png */; };
+		C0B3BC7619813B9C00680B30 /* UIViewController+MJPopupSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B3BC7519813B9B00680B30 /* UIViewController+MJPopupSettings.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,8 @@
 		7A469E1F159793BE00BA5F2E /* MJSecondDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJSecondDetailViewController.m; sourceTree = "<group>"; };
 		7A469E20159793BE00BA5F2E /* MJSecondDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJSecondDetailViewController.xib; sourceTree = "<group>"; };
 		7ACBD91916BC60C4005F5EAB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C0B3BC7419813B9B00680B30 /* UIViewController+MJPopupSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupSettings.h"; sourceTree = "<group>"; };
+		C0B3BC7519813B9B00680B30 /* UIViewController+MJPopupSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupSettings.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,8 @@
 				7A469E101597903B00BA5F2E /* MJPopupBackgroundView.m */,
 				7A469E111597903B00BA5F2E /* UIViewController+MJPopupViewController.h */,
 				7A469E121597903B00BA5F2E /* UIViewController+MJPopupViewController.m */,
+				C0B3BC7419813B9B00680B30 /* UIViewController+MJPopupSettings.h */,
+				C0B3BC7519813B9B00680B30 /* UIViewController+MJPopupSettings.m */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -236,6 +241,7 @@
 				7A469E131597903B00BA5F2E /* MJPopupBackgroundView.m in Sources */,
 				7A469E141597903B00BA5F2E /* UIViewController+MJPopupViewController.m in Sources */,
 				7A469E19159790A000BA5F2E /* MJDetailViewController.m in Sources */,
+				C0B3BC7619813B9C00680B30 /* UIViewController+MJPopupSettings.m in Sources */,
 				7A469E21159793BE00BA5F2E /* MJSecondDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

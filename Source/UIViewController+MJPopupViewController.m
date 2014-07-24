@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MJPopupBackgroundView.h"
 #import <objc/runtime.h>
-
+#import "UIViewController+MJPopupSettings.h"
 #define kPopupModalAnimationDuration 0.35
 #define kMJPopupViewController @"kMJPopupViewController"
 #define kMJPopupBackgroundView @"kMJPopupBackgroundView"
@@ -108,13 +108,16 @@ static void * const keypath = (void*)&keypath;
     if ([sourceView.subviews containsObject:popupView]) return;
     
     // customize popupView
-    popupView.layer.shadowPath = [UIBezierPath bezierPathWithRect:popupView.bounds].CGPath;
-    popupView.layer.masksToBounds = NO;
-    popupView.layer.shadowOffset = CGSizeMake(5, 5);
-    popupView.layer.shadowRadius = 5;
-    popupView.layer.shadowOpacity = 0.5;
-    popupView.layer.shouldRasterize = YES;
-    popupView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    if ([self.mj_popupViewController showsShadow]) {
+        popupView.layer.shadowPath = [UIBezierPath bezierPathWithRect:popupView.bounds].CGPath;
+        popupView.layer.masksToBounds = NO;
+        popupView.layer.shadowOffset = CGSizeMake(5, 5);
+        popupView.layer.shadowRadius = 5;
+        popupView.layer.shadowOpacity = 0.5;
+        popupView.layer.shouldRasterize = YES;
+        popupView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+
+    }
     
     // Add semi overlay
     UIView *overlayView = [[UIView alloc] initWithFrame:sourceView.bounds];
@@ -130,17 +133,21 @@ static void * const keypath = (void*)&keypath;
     [overlayView addSubview:self.mj_popupBackgroundView];
     
     // Make the Background Clickable
-    UIButton * dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    dismissButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    dismissButton.backgroundColor = [UIColor clearColor];
-    dismissButton.frame = sourceView.bounds;
-    [overlayView addSubview:dismissButton];
+    UIButton * dismissButton = nil;
+    if ([self.mj_popupViewController autoDismissEnabled]) {
+        dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        dismissButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        dismissButton.backgroundColor = [UIColor clearColor];
+        dismissButton.frame = sourceView.bounds;
+        [overlayView addSubview:dismissButton];
+        [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     popupView.alpha = 0.0f;
     [overlayView addSubview:popupView];
     [sourceView addSubview:overlayView];
     
-    [dismissButton addTarget:self action:@selector(dismissPopupViewControllerWithanimation:) forControlEvents:UIControlEventTouchUpInside];
+  
     switch (animationType) {
         case MJPopupViewAnimationSlideBottomTop:
         case MJPopupViewAnimationSlideBottomBottom:

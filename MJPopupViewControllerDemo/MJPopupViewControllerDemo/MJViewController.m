@@ -10,6 +10,7 @@
 #import "UIViewController+MJPopupViewController.h"
 #import "MJDetailViewController.h"
 #import "MJSecondDetailViewController.h"
+#import "UIViewController+MJPopupSettings.h"
 
 @interface MJViewController () <MJSecondPopupDelegate>{
     NSArray *actions;
@@ -169,6 +170,7 @@
     switch (indexPath.section) {
         case 0: {
             MJDetailViewController *detailViewController = [[MJDetailViewController alloc] initWithNibName:@"MJDetailViewController" bundle:nil];
+            [detailViewController setShowsShadow:NO];
             [self presentPopupViewController:detailViewController animationType:indexPath.row];
         }
             break;
