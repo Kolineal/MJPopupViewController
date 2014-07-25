@@ -14,6 +14,7 @@
 #define kPopupModalAnimationDuration 0.35
 #define kMJPopupViewController @"kMJPopupViewController"
 #define kMJPopupBackgroundView @"kMJPopupBackgroundView"
+#define kMJPresentingViewController @"kMJPresentingViewController"
 #define kMJSourceViewTag 23941
 #define kMJPopupViewTag 23942
 #define kMJOverlayViewTag 23945
@@ -50,7 +51,14 @@ static void * const keypath = (void*)&keypath;
     objc_setAssociatedObject(self, kMJPopupBackgroundView, mj_popupBackgroundView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
 }
+- (UIViewController*)mj_presentingViewController {
+    return objc_getAssociatedObject(self, kMJPresentingViewController);
+}
 
+- (void)setMj_presentingViewController:(UIViewController *)mj_presentingViewController {
+    objc_setAssociatedObject(self, kMJPresentingViewController, mj_presentingViewController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+}
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType dismissed:(void(^)(void))dismissed
 {
     self.mj_popupViewController = popupViewController;
@@ -59,6 +67,7 @@ static void * const keypath = (void*)&keypath;
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType
 {
+    popupViewController.mj_presentingViewController = self;
     [self presentPopupViewController:popupViewController animationType:animationType dismissed:nil];
 }
 
@@ -85,7 +94,10 @@ static void * const keypath = (void*)&keypath;
             break;
     }
 }
-
+-(void)dismissCurrentPopupViewControllerWithanimationType:(MJPopupViewAnimation)animationType{
+    NSAssert(self.mj_presentingViewController, @"presenting controller is nil");
+    [self.mj_presentingViewController dismissPopupViewControllerWithanimationType:animationType];
+}
 
 
 ////////////////////////////////////////////////////////////////////////////

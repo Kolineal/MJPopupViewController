@@ -7,7 +7,7 @@
 //
 
 #import "MJSecondDetailViewController.h"
-
+#import "UIViewController+MJPopupViewController.h"
 @interface MJSecondDetailViewController ()
 
 @end
@@ -19,9 +19,7 @@
 
 - (IBAction)closePopup:(id)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(cancelButtonClicked:)]) {
-        [self.delegate cancelButtonClicked:self];
-    }
+    [self dismissCurrentPopupViewControllerWithanimationType:MJPopupViewAnimationSlideLeftRight];
 }
 
 @end
