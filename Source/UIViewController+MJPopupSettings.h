@@ -17,4 +17,8 @@
 
 - (BOOL)autoDismissEnabled;
 - (void)setAutoDismissEnabled:(BOOL)autoDismissEnabled;
+
+- (float)popupOffset;
+- (void)setPopupOffest:(float)popupOffset;
+
 @end

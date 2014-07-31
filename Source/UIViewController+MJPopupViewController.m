@@ -67,12 +67,17 @@ static void * const keypath = (void*)&keypath;
 
 - (void)presentPopupViewController:(UIViewController*)popupViewController animationType:(MJPopupViewAnimation)animationType
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changePositionWhenKeyboardShown) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changePositionWhenKeyboardHiden) name:UIKeyboardWillHideNotification object:nil];
     popupViewController.mj_presentingViewController = self;
     [self presentPopupViewController:popupViewController animationType:animationType dismissed:nil];
 }
 
 - (void)dismissPopupViewControllerWithanimationType:(MJPopupViewAnimation)animationType
 {
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     UIView *sourceView = [self topView];
     UIView *popupView = [sourceView viewWithTag:kMJPopupViewTag];
     UIView *overlayView = [sourceView viewWithTag:kMJOverlayViewTag];
@@ -375,6 +380,58 @@ static void * const keypath = (void*)&keypath;
         }
     }];
 }
+
+#pragma mark Change Popup Position
+
+- (void)changePositionWhenKeyboardShown
+{
+    if ([self.mj_popupViewController popupOffset] == 0)
+    {
+        return;
+    }
+    // Generating Start and Stop Positions
+    UIView* popupView = self.mj_popupViewController.view;
+    UIView *sourceView = [self topView];
+    CGSize sourceSize = sourceView.bounds.size;
+    CGSize popupSize = popupView.bounds.size;
+    CGRect popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
+                                     (sourceSize.height - popupSize.height) / 2,
+                                     popupSize.width,
+                                     popupSize.height);
+    popupEndRect.origin.y -= self.mj_popupViewController.popupOffset;
+    // Set starting properties
+    
+    [UIView animateWithDuration:kPopupModalAnimationDuration animations:^{
+        [self.mj_popupViewController viewWillAppear:NO];
+        popupView.frame = popupEndRect;
+    } completion:^(BOOL finished) {
+        [self.mj_popupViewController viewDidAppear:NO];
+    }];
+}
+- (void)changePositionWhenKeyboardHiden
+{
+    if ([self.mj_popupViewController popupOffset] == 0)
+    {
+        return;
+    }
+    // Generating Start and Stop Positions
+    UIView* popupView = self.mj_popupViewController.view;
+    UIView *sourceView = [self topView];
+    CGSize sourceSize = sourceView.bounds.size;
+    CGSize popupSize = popupView.bounds.size;
+    CGRect popupEndRect = CGRectMake((sourceSize.width - popupSize.width) / 2,
+                                     (sourceSize.height - popupSize.height) / 2,
+                                     popupSize.width,
+                                     popupSize.height);
+    // Set starting properties
+    [UIView animateWithDuration:kPopupModalAnimationDuration animations:^{
+        [self.mj_popupViewController viewWillAppear:NO];
+        popupView.frame = popupEndRect;
+    } completion:^(BOOL finished) {
+        [self.mj_popupViewController viewDidAppear:NO];
+    }];
+}
+
 
 #pragma mark -
 #pragma mark Category Accessors
