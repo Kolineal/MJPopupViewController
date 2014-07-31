@@ -21,4 +21,7 @@
 - (float)popupOffset;
 - (void)setPopupOffest:(float)popupOffset;
 
+- (CGPoint)initialPositionOffset;
+- (void)setInitialPositionOffset:(CGPoint)initialOffset;
+
 @end

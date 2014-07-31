@@ -13,26 +13,14 @@
 -(BOOL)showsShadow{
     id number = objc_getAssociatedObject(self, @"showsShadow");
     if (number) {
-        int result = [(NSNumber *)number intValue];
-        if (result == 1) {
-            return YES;
-        }
-        if (result == 0) {
-            return NO;
-        }
+        return [number boolValue];
     }
     return YES;
 }
 -(BOOL)autoDismissEnabled{
     id number = objc_getAssociatedObject(self, @"autoDismissEnabled");
     if (number) {
-        int result = [(NSNumber *)number intValue];
-        if (result == 1) {
-            return YES;
-        }
-        if (result == 0) {
-            return NO;
-        }
+        return [number boolValue];
     }
    
     return YES;
@@ -44,6 +32,15 @@
     else
         return 0.0f;
 }
+-(CGPoint)initialPositionOffset{
+    id value = objc_getAssociatedObject(self, @"initialPositionOffset");
+    if (value) {
+        CGPoint result = [(NSValue *)value CGPointValue];
+        return result;
+    }
+    
+    return CGPointZero;
+}
 -(void)setAutoDismissEnabled:(BOOL)autoDismissEnabled{
     objc_setAssociatedObject(self, @"autoDismissEnabled", [NSNumber numberWithBool:autoDismissEnabled], OBJC_ASSOCIATION_RETAIN);
 }
@@ -52,5 +49,9 @@
 }
 -(void)setPopupOffest:(float)popupOffset{
     objc_setAssociatedObject(self, @"popupOffset", [NSNumber numberWithFloat:popupOffset],  OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+-(void)setInitialPositionOffset:(CGPoint)initialOffset{
+    objc_setAssociatedObject(self, @"initialPositionOffset", [NSValue valueWithCGPoint:initialOffset], OBJC_ASSOCIATION_RETAIN);
+
 }
 @end

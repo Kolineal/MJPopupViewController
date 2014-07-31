@@ -171,6 +171,7 @@
         case 0: {
             MJDetailViewController *detailViewController = [[MJDetailViewController alloc] initWithNibName:@"MJDetailViewController" bundle:nil];
             [detailViewController setShowsShadow:NO];
+            [detailViewController setInitialPositionOffset:CGPointMake(0, 100)];
             [self presentPopupViewController:detailViewController animationType:indexPath.row];
         }
             break;
@@ -178,6 +179,8 @@
         default: {
             MJSecondDetailViewController *secondDetailViewController = [[MJSecondDetailViewController alloc] initWithNibName:@"MJSecondDetailViewController" bundle:nil];
             secondDetailViewController.delegate = self;
+            [secondDetailViewController setInitialPositionOffset:CGPointMake(0, -50)];
+
             [self presentPopupViewController:secondDetailViewController animationType:MJPopupViewAnimationFade];
             
         }
